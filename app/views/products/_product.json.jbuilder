@@ -1,6 +1,6 @@
 json.id product.id
 json.name product.name
-json.price product.price
+json.price number_to_currency(product.price)
 json.tax product.tax
 json.total product.total
 json.is_discounted? product.is_discounted?
