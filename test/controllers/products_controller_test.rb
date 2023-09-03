@@ -28,10 +28,16 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       assert_equal "image.jpg", data["image_url"]
       assert_equal "test description", data["description"]
     end
+
+    assert_difference "Product.count", 0 do
+      post "/products.json", params: {}
+      assert_response 422
+    end
   end
 
   test "update" do
     product = Product.first
+    pp product
     patch "/products/#{product.id}.json", params: { name: "Updated name" }
     assert_response 200
 
@@ -39,6 +45,9 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Updated name", data["name"]
     assert_equal product.image_url, data["image_url"]
     assert_equal product.description, data["description"]
+
+    patch "/products/#{product.id}.json", params: { name: "" }
+    assert_response 422
   end
 
   test "destroy" do
