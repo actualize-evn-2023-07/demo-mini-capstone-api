@@ -24,6 +24,10 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find_by(id: params[:id])
-    render :show
+    if @order.user_id == current_user.id
+      render :show
+    else
+      render json: { message: "NOPE" }
+    end
   end
 end
