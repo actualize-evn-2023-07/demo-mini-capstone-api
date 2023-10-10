@@ -1,5 +1,9 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_admin, except: [:index, :show]
+  before_action :authenticate_admin, except: [:index, :show, :home]
+
+  def home
+    render json: { message: "Home" }
+  end
 
   def index
     @products = Product.all
